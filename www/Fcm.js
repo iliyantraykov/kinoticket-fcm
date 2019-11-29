@@ -7,8 +7,9 @@ function Fcm() {
 //   window.plugins.socialsharing.iPadPopupCoordinates = function() {
 //     return "100,100,200,300";
 //   };
-Fcm.prototype.iPadPopupCoordinates = function () {
+Fcm.prototype.getToken = function () {
   // left,top,width,height
+  console.log(123);
   return "-1,-1,-1,-1";
 };
 
