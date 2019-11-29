@@ -1,7 +1,7 @@
 alert(1);
 var exec = require('cordova/exec');
 
-function FCMPlugin() {
+var FCMPlugin = function () {
 	console.log("FCMPlugin.js: is created");
 }
 
@@ -53,5 +53,5 @@ alert(2);
 // FIRE READY //
 //exec(function (result) { console.log("fcmTrack FCMPlugin Ready OK") }, function (result) { console.log("fcmTrack FCMPlugin Ready ERROR") }, "FCMPlugin", 'ready', []);
 alert(3);
-var fcmPlugin = new FCMPlugin();
-module.exports = fcmPlugin;
+//var fcmPlugin = new FCMPlugin();
+module.exports = FCMPlugin;
