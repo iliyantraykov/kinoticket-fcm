@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alexxiliev/itp-fcm.git"
+    "url": "https://github.com/iliyantraykov/kinoticket-fcm.git"
   },
   "keywords": [
     "ecosystem:cordova",
