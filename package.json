@@ -1,40 +1,32 @@
 {
-  "version": "1.0.7",
   "name": "cordova-plugin-fcm-custom",
-  "cordova_name": "Cordova FCM Push Plugin",
-  "description": "Google Firebase Cloud Messaging Cordova Push Plugin",
-  "license": "MIT",
-  "repo": "",
-  "issue": "",
-  "author": {
-    "name": "Felipe Echanique Torres"
+  "version": "1.0.7",
+  "description": "Share text, images (and other files), or a link via the native sharing widget of your device. Android is fully supported, as well as iOS 6 and up. WP8 has somewhat limited support.",
+  "cordova": {
+    "id": "cordova-plugin-fcm-custom",
+    "platforms": [
+      "ios",
+      "android",
+      "wp8",
+      "windows",
+      "web"
+    ]
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/iliyantraykov/kinoticket-fcm.git"
   },
   "keywords": [
-    "ecosystem:cordova",
-    "cordova-android",
     "cordova-ios",
-    "notifications",
-    "push",
-    "firebase",
-    "fcm",
-    "ios",
-    "android",
-    "cordova"
+    "cordova-android",
+    "cordova-windows"
   ],
-  "cordova": {
-    "id": "cordova-plugin-fcm-custom",
-    "platforms": [
-      "android",
-      "browser",
-      "ios",
-      "osx",
-      "windows"
-    ]
-  },
-  "engines": [],
-  "englishdoc": ""
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "author": "Iliyan traykov",
+  "license": "MIT"
 }
