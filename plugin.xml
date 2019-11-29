@@ -29,19 +29,5 @@
 		<clobbers target="FCMPlugin" />
     </js-module>
 
-    <engines>
-		<engine name="cordova-android" version=">=4.0.0" />
-    </engines>
-	
-    <!-- ANDROID CONFIGURATION -->
-    <platform name="android">
-		
-
-    </platform>
-	
-    <!-- IOS CONFIGURATION -->
-    <platform name="ios">
-       
-    </platform>
 	
 </plugin>
