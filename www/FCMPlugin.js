@@ -51,7 +51,7 @@ FCMPlugin.prototype.getBadgeNumber = function (success, error) {
 };
 alert(2);
 // FIRE READY //
-exec(function (result) { console.log("fcmTrack FCMPlugin Ready OK") }, function (result) { console.log("fcmTrack FCMPlugin Ready ERROR") }, "FCMPlugin", 'ready', []);
+//exec(function (result) { console.log("fcmTrack FCMPlugin Ready OK") }, function (result) { console.log("fcmTrack FCMPlugin Ready ERROR") }, "FCMPlugin", 'ready', []);
 alert(3);
 var fcmPlugin = new FCMPlugin();
 module.exports = fcmPlugin;
