@@ -1,6 +1,6 @@
 {
   "version": "1.0.7",
-  "name": "cordova-plugin-fcm",
+  "name": "cordova-plugin-fcm-custom",
   "cordova_name": "Cordova FCM Push Plugin",
   "description": "Google Firebase Cloud Messaging Cordova Push Plugin",
   "license": "MIT",
@@ -25,13 +25,16 @@
     "android",
     "cordova"
   ],
-  "platforms": [
-    "android",
+  "cordova": {
+    "id": "cordova-plugin-fcm-custom",
+    "platforms": [
+      "android",
       "browser",
       "ios",
       "osx",
       "windows"
-  ],
+    ]
+  },
   "engines": [],
   "englishdoc": ""
 }
