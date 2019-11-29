@@ -1,39 +1,37 @@
 {
   "project_info": {
-    "project_number": "448610407783",
-    "firebase_url": "https://itp-mobile.firebaseio.com",
-    "project_id": "itp-mobile",
-    "storage_bucket": "itp-mobile.appspot.com"
+    "project_number": "992268945578",
+    "firebase_url": "https://kinotickets-push-notification.firebaseio.com",
+    "project_id": "kinotickets-push-notification",
+    "storage_bucket": "kinotickets-push-notification.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:448610407783:android:acebf96cbd5c1a28",
+        "mobilesdk_app_id": "1:992268945578:android:3a81181293894e9902a8d3",
         "android_client_info": {
-          "package_name": "com.fest.app.inthepalace"
+          "package_name": "com.neugass.kinotickets"
         }
       },
       "oauth_client": [
         {
-          "client_id": "448610407783-qi13s4k90kfui1qgsksprpmcat0feovf.apps.googleusercontent.com",
+          "client_id": "992268945578-6k51es5tqbfm1utudcke0d5l0hvpq5fk.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyATR6JoNPYPZYpIcHgVEDPUHgm6kqqSngo"
+          "current_key": "AIzaSyBoFp-i6z_0-Ul7UkfZKD-HgxhDerwrDJY"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "992268945578-6k51es5tqbfm1utudcke0d5l0hvpq5fk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
