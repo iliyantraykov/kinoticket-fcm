@@ -1,7 +1,6 @@
-alert(1);
 var exec = require('cordova/exec');
 
-var FCMPlugin = function () {
+function FCMPlugin() {
 	console.log("FCMPlugin.js: is created");
 }
 
@@ -49,9 +48,9 @@ FCMPlugin.prototype.getToken = function (success, error) {
 // FCMPlugin.prototype.getBadgeNumber = function (success, error) {
 // 	exec(success, error, "FCMPlugin", "getBadgeNumber", []);
 // };
-alert(2);
+
 // FIRE READY //
 //exec(function (result) { console.log("fcmTrack FCMPlugin Ready OK") }, function (result) { console.log("fcmTrack FCMPlugin Ready ERROR") }, "FCMPlugin", 'ready', []);
-alert(3);
-//var fcmPlugin = new FCMPlugin();
-module.exports = FCMPlugin;
+
+var fcmPlugin = new FCMPlugin();
+module.exports = fcmPlugin;
