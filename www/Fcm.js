@@ -1,11 +1,11 @@
 var exec = require('cordova/exec');
 
-function FCMPlugin() {
+function Fcm() {
 	console.log("FCMPlugin.js: is created");
 }
 
 // GET TOKEN //
-FCMPlugin.prototype.getToken = function (success, error) {
+Fcm.prototype.getToken = function (success, error) {
 	console.log(124)
 }
 
@@ -52,5 +52,5 @@ FCMPlugin.prototype.getToken = function (success, error) {
 // FIRE READY //
 //exec(function (result) { console.log("fcmTrack FCMPlugin Ready OK") }, function (result) { console.log("fcmTrack FCMPlugin Ready ERROR") }, "FCMPlugin", 'ready', []);
 
-var fcmPlugin = new FCMPlugin();
-module.exports = fcmPlugin;
+var fcm = new Fcm();
+module.exports = fcm;

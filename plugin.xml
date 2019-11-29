@@ -25,8 +25,8 @@
     
     <info>Cordova FCM plugin</info>
 	
-    <js-module src="www/FCMPlugin.js" name="FCMPlugin">
-		<clobbers target="window.FCMPlugin" />
+    <js-module src="www/Fcm.js" name="Fcm">
+		  <clobbers target="window.fcm" />
     </js-module>
 
 	
