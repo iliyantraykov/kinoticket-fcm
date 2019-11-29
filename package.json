@@ -27,7 +27,10 @@
   ],
   "platforms": [
     "android",
-    "ios"
+      "browser",
+      "ios",
+      "osx",
+      "windows"
   ],
   "engines": [],
   "englishdoc": ""
