@@ -4,10 +4,10 @@ function Fcm() {
   alert("FCMPlugin.js: is created");
 }
 
-Fcm.prototype.getToken = function () {
-  // left,top,width,height
-  return "12345678";
-};
+Fcm.prototype.getToken = function (success, error) {
+  alert('getToken called');
+	exec(success, error, "FCMPlugin", 'getToken', []);
+}
 
 // SUBSCRIBE TO TOPIC //
 Fcm.prototype.subscribeToTopic = function (topic, success, error) {
@@ -50,7 +50,7 @@ Fcm.prototype.getBadgeNumber = function (success, error) {
 };
 
 // FIRE READY //
-exec(function (result) { console.log("fcmTrack FCMPlugin Ready OK") }, function (result) { console.log("fcmTrack FCMPlugin Ready ERROR") }, "FCMPlugin", 'ready', []);
+exec(function (result) { alert("fcmTrack FCMPlugin Ready OK") }, function (result) { alert("fcmTrack FCMPlugin Ready ERROR") }, "FCMPlugin", 'ready', []);
 
 
 Fcm.install = function () {
@@ -59,12 +59,6 @@ Fcm.install = function () {
   }
 
   window.plugins.fcm = new Fcm();
-
-  // Note only polyfill navigator.share if it is not defined, since shareW3C implements L1 of the spec,
-  // and an existing navigator.share method could implement L2.
-  if (!navigator.share) {
-    navigator.share = window.plugins.fcm.shareW3C;
-  }
 
   return window.plugins.fcm;
 };
