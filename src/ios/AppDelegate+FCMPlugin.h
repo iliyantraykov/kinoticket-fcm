@@ -13,7 +13,5 @@
 @interface AppDelegate (FCMPlugin)
 
 + (NSData*)getLastPush;
-+ (NSString*)getLastFCMID;
-
 
 @end

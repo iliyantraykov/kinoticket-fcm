@@ -16,8 +16,7 @@ static BOOL notificatorReceptorReady = NO;
 static BOOL appInForeground = YES;
 
 static NSString *notificationCallback = @"FCMPlugin.onNotificationReceived";
-static NSString *FCMIDCallback = @"FCMPlugin.onFCMIDReceived";
-
+static NSString *tokenRefreshCallback = @"FCMPlugin.onTokenRefreshReceived";
 static FCMPlugin *fcmPluginInstance;
 
 + (FCMPlugin *) fcmPlugin {
@@ -35,7 +34,18 @@ static FCMPlugin *fcmPluginInstance;
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }];
-    
+}
+
+// GET TOKEN //
+- (void) getToken:(CDVInvokedUrlCommand *)command 
+{
+    NSLog(@"get Token");
+    [self.commandDelegate runInBackground:^{
+        NSString* token = [[FIRInstanceID instanceID] token];
+        CDVPluginResult* pluginResult = nil;
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:token];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }];
 }
 
 // UN/SUBSCRIBE TOPIC //
@@ -49,38 +59,16 @@ static FCMPlugin *fcmPluginInstance;
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:topic];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }];
-    
 }
 
 - (void) unsubscribeFromTopic:(CDVInvokedUrlCommand *)command 
 {
     NSString* topic = [command.arguments objectAtIndex:0];
-    NSLog(@"subscribe To Topic %@", topic);
+    NSLog(@"unsubscribe From Topic %@", topic);
     [self.commandDelegate runInBackground:^{
         if(topic != nil)[[FIRMessaging messaging] unsubscribeFromTopic:[NSString stringWithFormat:@"/topics/%@", topic]];
         CDVPluginResult* pluginResult = nil;
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:topic];
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    }];
-    
-}
-
-- (void) setBadgeNumber:(CDVInvokedUrlCommand *)command {
-    int number = [[command.arguments objectAtIndex:0] intValue];
-
-    [self.commandDelegate runInBackground:^{
-        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:number];
-
-        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    }];
-}
-
-- (void) getBadgeNumber:(CDVInvokedUrlCommand *)command {
-    [self.commandDelegate runInBackground:^{
-        long badge = [[UIApplication sharedApplication] applicationIconBadgeNumber];
-
-        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDouble:badge];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }];
 }
@@ -100,31 +88,11 @@ static FCMPlugin *fcmPluginInstance;
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
-//edited above 1
-- (void) getFCMID:(CDVInvokedUrlCommand *)command
-{
-    NSLog(@"view registered for FCM ID");
-    
-    notificatorReceptorReady = YES;
-    NSString* lastFCMID = [AppDelegate getLastFCMID];
-    NSLog(@"trackFCM lastFCMID %@", lastFCMID);
-
-    if (lastFCMID != nil) {
-        [FCMPlugin.fcmPlugin notifyOfFCMID:lastFCMID];
-    }
-    
-    CDVPluginResult* pluginResult = nil;
-    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    
-}
-
 -(void) notifyOfMessage:(NSData *)payload
 {
     NSString *JSONString = [[NSString alloc] initWithBytes:[payload bytes] length:[payload length] encoding:NSUTF8StringEncoding];
-    NSString * notifyJS = [NSString stringWithFormat:@"%@(%@);", notificationCallback, JSONString]; 
-
-    NSLog(@"trackFCM stringByEvaluatingJavaScriptFromString %@", notifyJS);
+    NSString * notifyJS = [NSString stringWithFormat:@"%@(%@);", notificationCallback, JSONString];
+    NSLog(@"stringByEvaluatingJavaScriptFromString %@", notifyJS);
     
     if ([self.webView respondsToSelector:@selector(stringByEvaluatingJavaScriptFromString:)]) {
         [(UIWebView *)self.webView stringByEvaluatingJavaScriptFromString:notifyJS];
@@ -133,24 +101,15 @@ static FCMPlugin *fcmPluginInstance;
     }
 }
 
-//edited above 1
-
--(void) notifyOfFCMID:(NSString *)FCMID
+-(void) notifyOfTokenRefresh:(NSString *)token
 {
-    NSString * notifyJS = [NSString stringWithFormat:@"%@('%@');", FCMIDCallback, FCMID];
-    NSLog(@"trackFCM stringByEvaluatingJavaScriptFromString %@", notifyJS);
+    NSString * notifyJS = [NSString stringWithFormat:@"%@('%@');", tokenRefreshCallback, token];
+    NSLog(@"stringByEvaluatingJavaScriptFromString %@", notifyJS);
     
-    if (FCMID != nil) {
-         NSLog(@"trackFCM if FCMID %@", FCMID);
-        if ([self.webView respondsToSelector:@selector(stringByEvaluatingJavaScriptFromString:)]) {
-            NSLog(@"trackFCM if in send to js");
-            [(UIWebView *)self.webView stringByEvaluatingJavaScriptFromString:notifyJS];
-        } else {
-             NSLog(@"trackFCM else in send to js");
-            [self.webViewEngine evaluateJavaScript:notifyJS completionHandler:nil];
-        }
-    }else{
-         NSLog(@"trackFCM else FCMID %@", FCMID);
+    if ([self.webView respondsToSelector:@selector(stringByEvaluatingJavaScriptFromString:)]) {
+        [(UIWebView *)self.webView stringByEvaluatingJavaScriptFromString:notifyJS];
+    } else {
+        [self.webViewEngine evaluateJavaScript:notifyJS completionHandler:nil];
     }
 }
 
@@ -169,5 +128,54 @@ static FCMPlugin *fcmPluginInstance;
     }
     appInForeground = YES;
 }
+
+// Firebase Analytics
+
+- (void) logEvent: (CDVInvokedUrlCommand *)command {
+    NSLog(@"logEvent");
+
+    NSString* name = [command.arguments objectAtIndex:0];
+    NSDictionary* parameters = [command.arguments objectAtIndex:1];
+
+    [FIRAnalytics logEventWithName:name parameters:parameters];
+
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)setUserId:(CDVInvokedUrlCommand *)command {
+    NSLog(@"setUserId");
+
+    NSString* id = [command.arguments objectAtIndex:0];
+
+    [FIRAnalytics setUserID:id];
+
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)setUserProperty:(CDVInvokedUrlCommand *)command {
+    NSLog(@"setUserProperty");
+
+    NSString* name = [command.arguments objectAtIndex:0];
+    NSString* value = [command.arguments objectAtIndex:1];
+
+    [FIRAnalytics setUserPropertyString:value forName:name];
+
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+// Clear all notifications
+- (void) clearAllNotifications: (CDVInvokedUrlCommand *)command {
+    [self.commandDelegate runInBackground:^{
+      [[UIApplication sharedApplication] setApplicationIconBadgeNumber:1];
+      [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+
+      CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+      [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }];
+}
+
 
 @end

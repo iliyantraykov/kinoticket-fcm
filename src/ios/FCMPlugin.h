@@ -8,18 +8,17 @@
 
 + (FCMPlugin *) fcmPlugin;
 - (void)ready:(CDVInvokedUrlCommand*)command;
+- (void)getToken:(CDVInvokedUrlCommand*)command;
 - (void)subscribeToTopic:(CDVInvokedUrlCommand*)command;
 - (void)unsubscribeFromTopic:(CDVInvokedUrlCommand*)command;
 - (void)registerNotification:(CDVInvokedUrlCommand*)command;
 - (void)notifyOfMessage:(NSData*) payload;
-
-- (void)getFCMID:(CDVInvokedUrlCommand*)command;
-- (void)notifyOfFCMID:(NSString*) FCMID;
-
-- (void)setBadgeNumber:(CDVInvokedUrlCommand*)command;
-- (void)getBadgeNumber:(CDVInvokedUrlCommand*)command;
-
+- (void)notifyOfTokenRefresh:(NSString*) token;
 - (void)appEnterBackground;
 - (void)appEnterForeground;
+- (void)logEvent:(CDVInvokedUrlCommand*)command;
+- (void)setUserId:(CDVInvokedUrlCommand*)command;
+- (void)setUserProperty:(CDVInvokedUrlCommand*)command;
+- (void)clearAllNotifications:(CDVInvokedUrlCommand*)command;
 
 @end
