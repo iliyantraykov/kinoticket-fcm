@@ -36,7 +36,7 @@
     <platform name="android">
       <config-file target="AndroidManifest.xml" parent="/manifest/application">
 
-		<meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/fcm_push_icon" />
+		<meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="/app/src/main/res/drawable/fcm_push_icon" />
 
         <activity android:exported="true" android:name="com.gae.scaffolder.plugin.FCMPluginActivity" android:launchMode="singleTop">
           <intent-filter>
