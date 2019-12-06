@@ -1,12 +1,12 @@
 var exec = require('cordova/exec');
 
 function FCMPlugin() { 
-	alert("FCMPlugin.js: is created");
+	console.log("FCMPlugin.js: is created");
 }
 
 // SUBSCRIBE TO TOPIC //
 FCMPlugin.prototype.subscribeToTopic = function( topic, success, error ){
-	alert('Get Token called');
+	console.log('Get Token called');
 	exec(success, error, "FCMPlugin", 'subscribeToTopic', [topic]);
 }
 // UNSUBSCRIBE FROM TOPIC //
@@ -58,7 +58,7 @@ FCMPlugin.prototype.setUserProperty = function(name, value, success, error){
 }
 
 // FIRE READY //
-exec(function(result){ alert("FCMPlugin NG Ready OK") }, function(result){ alert("FCMPlugin Ready ERROR") }, "FCMPlugin",'ready',[]);
+exec(function(result){ console.log("FCMPlugin NG Ready OK") }, function(result){ console.log("FCMPlugin Ready ERROR") }, "FCMPlugin",'ready',[]);
 
 var fcmPlugin = new FCMPlugin();
 module.exports = fcmPlugin;
