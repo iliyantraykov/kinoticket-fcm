@@ -1,11 +1,11 @@
 {
-  "name": "cordova-plugin-fcm-custom",
-  "version": "1.0.8",
+  "name": "cordova-plugin-fcm-custom-esof",
+  "version": "1.0.7",
   "description": "Share text, images (and other files), or a link via the native sharing widget of your device. Android is fully supported, as well as iOS 6 and up. WP8 has somewhat limited support.",
   "main": "www/FCMPlugin.js",
   "typings": "src/FCMPlugin.d.ts",
   "cordova": {
-    "id": "cordova-plugin-fcm-custom",
+    "id": "cordova-plugin-fcm-custom-esof",
     "platforms": [
       "ios",
       "android",
