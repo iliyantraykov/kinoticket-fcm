@@ -1,64 +1,97 @@
-var exec = require('cordova/exec');
+var exec = require("cordova/exec");
+var cordova = require("cordova");
 
-function FCMPlugin() { 
-	console.log("FCMPlugin.js: is created");
+function FCMPlugin() {
+  console.log("FCMPlugin.js: is created");
 }
+
+// CHECK FOR PERMISSION
+FCMPlugin.prototype.hasPermission = function (success, error) {
+  if (cordova.platformId !== "ios") {
+    success(true);
+    return;
+  }
+  exec(success, error, "FCMPlugin", "hasPermission", []);
+};
 
 // SUBSCRIBE TO TOPIC //
-FCMPlugin.prototype.subscribeToTopic = function( topic, success, error ){
-	console.log('Get Token called');
-	exec(success, error, "FCMPlugin", 'subscribeToTopic', [topic]);
-}
+FCMPlugin.prototype.subscribeToTopic = function (topic, success, error) {
+  exec(success, error, "FCMPlugin", "subscribeToTopic", [topic]);
+};
+
 // UNSUBSCRIBE FROM TOPIC //
-FCMPlugin.prototype.unsubscribeFromTopic = function( topic, success, error ){
-	exec(success, error, "FCMPlugin", 'unsubscribeFromTopic', [topic]);
-}
+FCMPlugin.prototype.unsubscribeFromTopic = function (topic, success, error) {
+  exec(success, error, "FCMPlugin", "unsubscribeFromTopic", [topic]);
+};
+
 // NOTIFICATION CALLBACK //
-FCMPlugin.prototype.onNotification = function( callback, success, error ){
-	FCMPlugin.prototype.onNotificationReceived = callback;
-	exec(success, error, "FCMPlugin", 'registerNotification',[]);
-}
+FCMPlugin.prototype.onNotification = function (callback, success, error) {
+  FCMPlugin.prototype.onNotificationReceived = callback;
+  exec(success, error, "FCMPlugin", "registerNotification", []);
+};
+
 // TOKEN REFRESH CALLBACK //
-FCMPlugin.prototype.onTokenRefresh = function( callback ){
-	FCMPlugin.prototype.onTokenRefreshReceived = callback;
-}
+FCMPlugin.prototype.onTokenRefresh = function (callback) {
+  FCMPlugin.prototype.onTokenRefreshReceived = callback;
+};
+
 // GET TOKEN //
-FCMPlugin.prototype.getToken = function( success, error ){
-	exec(success, error, "FCMPlugin", 'getToken', []);
-}
+FCMPlugin.prototype.getToken = function (success, error) {
+  exec(success, error, "FCMPlugin", "getToken", []);
+};
+
+// GET APNS TOKEN //
+FCMPlugin.prototype.getAPNSToken = function (success, error) {
+  if (cordova.platformId !== "ios") {
+    success(null);
+    return;
+  }
+  exec(success, error, "FCMPlugin", "getAPNSToken", []);
+};
+
+// CLEAR ALL NOTIFICATIONS //
+FCMPlugin.prototype.clearAllNotifications = function (success, error) {
+  exec(success, error, "FCMPlugin", "clearAllNotifications", []);
+};
+
+// REQUEST IOS PUSH PERMISSION //
+FCMPlugin.prototype.requestPushPermissionIOS = function (success, error) {
+  if (cordova.platformId === "ios") {
+    exec(success, error, "FCMPlugin", "requestPushPermission", []);
+  }
+};
+
+// REQUEST THE CREATION OF A NOTIFICATION CHANNEL //
+FCMPlugin.prototype.createNotificationChannelAndroid = function (channelConfig, success, error) {
+  if (cordova.platformId === "android") {
+    exec(success, error, "FCMPlugin", "createNotificationChannel", [channelConfig]);
+  }
+};
 
 // DEFAULT NOTIFICATION CALLBACK //
-FCMPlugin.prototype.onNotificationReceived = function(payload){
-	console.log("Received push notification")
-	console.log(payload)
-}
+FCMPlugin.prototype.onNotificationReceived = function (payload) {
+  console.log("Received push notification");
+  console.log(payload);
+};
+
 // DEFAULT TOKEN REFRESH CALLBACK //
-FCMPlugin.prototype.onTokenRefreshReceived = function(token){
-	console.log("Received token refresh")
-	console.log(token)
-}
-
-// Analytics Plugin
-FCMPlugin.prototype.clearAllNotifications = function(success, error){
-  exec(success, error, 'FCMPlugin', 'clearAllNotifications', []);
-}
-
-// Analytics Plugin
-
-FCMPlugin.prototype.logEvent = function(eventName, eventParams, success, error){
-  exec(success, error, 'FCMPlugin', 'logEvent', [eventName, eventParams || {}]);
-}
-
-FCMPlugin.prototype.setUserId = function(userId, success, error){
-  exec(success, error, 'FCMPlugin', 'setUserId', [userId]);
-}
-
-FCMPlugin.prototype.setUserProperty = function(name, value, success, error){
-  exec(success, error, 'FCMPlugin', 'setUserProperty', [name, value]);
-}
+FCMPlugin.prototype.onTokenRefreshReceived = function (token) {
+  console.log("Received token refresh");
+  console.log(token);
+};
 
 // FIRE READY //
-exec(function(result){ console.log("FCMPlugin NG Ready OK") }, function(result){ console.log("FCMPlugin Ready ERROR") }, "FCMPlugin",'ready',[]);
+exec(
+  function (result) {
+    console.log("FCMPlugin Ready OK");
+  },
+  function (result) {
+    console.log("FCMPlugin Ready ERROR");
+  },
+  "FCMPlugin",
+  "ready",
+  []
+);
 
 var fcmPlugin = new FCMPlugin();
 module.exports = fcmPlugin;

@@ -7,18 +7,18 @@
 }
 
 + (FCMPlugin *) fcmPlugin;
+- (void)notifyFCMTokenRefresh:(NSString*) token;
 - (void)ready:(CDVInvokedUrlCommand*)command;
+- (void)hasPermission:(CDVInvokedUrlCommand*)command;
 - (void)getToken:(CDVInvokedUrlCommand*)command;
+- (void)getAPNSToken:(CDVInvokedUrlCommand*)command;
+- (void)clearAllNotifications:(CDVInvokedUrlCommand *)command;
 - (void)subscribeToTopic:(CDVInvokedUrlCommand*)command;
 - (void)unsubscribeFromTopic:(CDVInvokedUrlCommand*)command;
 - (void)registerNotification:(CDVInvokedUrlCommand*)command;
 - (void)notifyOfMessage:(NSData*) payload;
-- (void)notifyOfTokenRefresh:(NSString*) token;
+- (void)runJS:(NSString *)jsCode;
 - (void)appEnterBackground;
 - (void)appEnterForeground;
-- (void)logEvent:(CDVInvokedUrlCommand*)command;
-- (void)setUserId:(CDVInvokedUrlCommand*)command;
-- (void)setUserProperty:(CDVInvokedUrlCommand*)command;
-- (void)clearAllNotifications:(CDVInvokedUrlCommand*)command;
 
 @end
